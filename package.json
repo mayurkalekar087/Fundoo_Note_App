@@ -1,0 +1,26 @@
+{
+  "name": "fundoo-notes-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mayurkalekar087/Fundoo_Note_App.git"
+  },
+  "keywords": [],
+  "author": "mayur",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mayurkalekar087/Fundoo_Note_App/issues"
+  },
+  "homepage": "https://github.com/mayurkalekar087/Fundoo_Note_App#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "pg": "^8.7.1"
+  }
+}
