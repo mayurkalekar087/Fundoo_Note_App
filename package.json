@@ -19,8 +19,11 @@
   },
   "homepage": "https://github.com/mayurkalekar087/Fundoo_Note_App#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.13",
     "pg": "^8.7.1"
   }
 }
