@@ -24,7 +24,30 @@ const bcrypt = require("bcrypt");
     }
   });
 
-  module.exports={
+  const loginUser = (async (req, res) => {
+    const { email, password } = req.body;
+    try {
+      const user = await pool.query(models.checkIfEmailExists, [email]);
+  
+      if (user.rows.length === 0) {
+        return res.status(401).json("Password or Email is Incorrect!");
+      }
+      const validPassword = await bcrypt.compare(
+        password,
+        user.rows[0].user_password
+      );
+      if (!validPassword) {
+        return res.status(401).json("Invalid");
+      }
+    res.json(user.rows[0]);  
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+module.exports={
       createUser,
+      loginUser,
   }
   
