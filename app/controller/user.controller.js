@@ -2,7 +2,9 @@ const models = require("../models/user.model");
 const pool = require("..//../config/database.config");
 const bcrypt = require("bcrypt");
 
-    const createUser = (async (req, res) => {
+  class UserDataController {
+    
+  createUser = (async (req, res) => {
     const { email, name, password } = req.body;
     try {
       const user = await pool.query(models.checkIfEmailExists, [email]);
@@ -24,7 +26,7 @@ const bcrypt = require("bcrypt");
     }
   });
 
-  const loginUser = (async (req, res) => {
+   loginUser = (async (req, res) => {
     const { email, password } = req.body;
     try {
       const user = await pool.query(models.checkIfEmailExists, [email]);
@@ -45,9 +47,5 @@ const bcrypt = require("bcrypt");
     res.status(500).send("Server error");
   }
 });
-
-module.exports={
-      createUser,
-      loginUser,
   }
-  
+module.exports= new UserDataController();
