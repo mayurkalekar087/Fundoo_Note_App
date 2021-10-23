@@ -33,5 +33,33 @@ class UserDataController {
           });
        }
   }
+  login = (req, res) =>  {
+    console.log('inside controller', req.body);
+    try {
+      const loginData = {
+        email: req.body.email,
+        password: req.body.password,
+      };
+      UserService.loginUser(loginData, (err, data) => {
+        if (err) {
+          return res.status(400).send({
+            success: false,
+            message: 'login failed',
+            err,
+          });
+        }
+        return res.status(200).send({
+          success: true,
+          message: 'logged in successfully',
+          data
+        });
+      });
+    } catch (err) {
+      return res.status(500).send({
+        success: false,
+        message: 'server error',
+      });
+    }
+}
 }
 module.exports = new UserDataController();
