@@ -1,5 +1,6 @@
 const UserModel = require("../models/user.model");
 
+
 class UserService {
     registerUser = (userData,callback) => {
         console.log("inside service");
