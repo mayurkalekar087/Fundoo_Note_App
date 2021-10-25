@@ -1,8 +1,8 @@
 const UserService = require("..//service/user.service");
+const {authUserRegister} = require("..//utility/user.validation");
 
 class UserDataController {
   create = (req, res) => {
-    console.log("inside controller", req.body);
     try{
         const userData = {
             firstName: req.body.firstName,
@@ -10,6 +10,15 @@ class UserDataController {
             email: req.body.email,
             password: req.body.password,
         };
+        const registerValidation = authUserRegister.validate(userData);
+            if(registerValidation.error) {
+                res.status(400).send({
+                    success: false,
+                    message: "Enter valid fields",
+                    data: registerValidation
+                });
+                return;
+            }
         UserService.registerUser(userData, (err, data) => {
             if (err) {
                 return res.status(409).json({

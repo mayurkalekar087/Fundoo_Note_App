@@ -4,7 +4,6 @@ const pool = require("..//../config/database.config");
 
 class UserModel {
   createDetails = (userDetails,callback) => {
-  console.log("inside model");
   const values = [userDetails.firstName,userDetails.lastName,userDetails.email,userDetails.password];
       pool.query(queries.createUser,values,(err,data)=>{
           if(err) {
@@ -17,7 +16,6 @@ class UserModel {
       });
     }
     loginUser = (loginData, authenticateUser) => {
-      console.log('inside model');
       const query = [loginData.email,loginData.password];
       pool.query(queries.loginUser,query,(err, data) => {
         if (data.rows.length===0) {

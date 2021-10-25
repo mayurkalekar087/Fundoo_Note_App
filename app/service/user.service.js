@@ -2,7 +2,6 @@ const UserModel = require("..//models/user.model");
 
 class UserService {
     registerUser = (userData,callback) => {
-        console.log("inside service");
         UserModel.createDetails(userData, (err,data)=>{
             if (err){
                 callback(err,null);
@@ -13,7 +12,6 @@ class UserService {
         });
     };
     loginUser = (loginData, authenticateUser) => {
-        console.log("inside service");
         UserModel.loginUser(loginData, (err, data) => {
             if (err) {
                 authenticateUser(err, null);
