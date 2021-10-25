@@ -1,5 +1,5 @@
 const UserService = require("..//service/user.service");
-const {authUserRegister} = require("..//utility/user.validation");
+const {authUserRegister,authUserLogin} = require("..//utility/user.validation");
 
 class UserDataController {
   create = (req, res) => {
@@ -48,6 +48,15 @@ login = (req, res) =>  {
       email: req.body.email,
       password: req.body.password,
     };
+    const loginValidation = authUserLogin.validate(loginData);
+          if (loginValidation.error){
+              res.status(400).send({
+                  success: false,
+                  message: 'check inserted fields',
+                  data: loginValidation
+              });
+              return;
+          };
     UserService.loginUser(loginData, (err, data) => {
       if (err) {
         return res.status(400).send({
