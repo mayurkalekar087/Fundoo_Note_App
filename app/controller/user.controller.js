@@ -1,5 +1,6 @@
 const UserService = require("..//service/user.service");
 const {authUserRegister,authUserLogin} = require("..//utility/user.validation");
+const {genSaltSync,hashSync} = require('bcrypt');
 
 class UserDataController {
    /**
@@ -16,6 +17,8 @@ class UserDataController {
             email: req.body.email,
             password: req.body.password,
         };
+        const Salt = genSaltSync(10);
+        userData.password = hashSync(req.body.password,Salt);
         const registerValidation = authUserRegister.validate(userData);
             if(registerValidation.error) {
                 res.status(400).send({

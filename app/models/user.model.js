@@ -13,10 +13,10 @@ class UserModel {
           if(err) {
              callback(err.stack,null);
           }else
-           {
+          {
            console.log(data.rows[0]);
            callback(null,data.rows[0]);
-           }
+          }
       });
     }
      /**
