@@ -2,6 +2,12 @@ const UserService = require("..//service/user.service");
 const {authUserRegister,authUserLogin} = require("..//utility/user.validation");
 
 class UserDataController {
+   /**
+     * @description : Function created to add user into database
+     * @param {*} req
+     * @param {*} res
+     * @returns
+     */
   create = (req, res) => {
     try{
         const userData = {
@@ -41,6 +47,11 @@ class UserDataController {
         });
      }
 }
+ /**
+     * @description: Function created to verify user login info
+     * @param {*} req
+     * @param {*} res
+     */
 login = (req, res) =>  {
   console.log('inside controller', req.body);
   try {
@@ -68,7 +79,7 @@ login = (req, res) =>  {
       return res.status(200).send({
         success: true,
         message: 'logged in successfully',
-        data
+         token: data
       });
     });
   } catch (err) {

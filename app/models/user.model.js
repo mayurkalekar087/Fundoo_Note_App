@@ -1,8 +1,12 @@
 const queries = require("..//queries/user.queries");
 const pool = require("..//../config/database.config");
 
-
 class UserModel {
+  /**
+     * @description: Adds data to the database
+     * @param {*} userDetails
+     * @param {*} callback
+     */
   createDetails = (userDetails,callback) => {
   const values = [userDetails.firstName,userDetails.lastName,userDetails.email,userDetails.password];
       pool.query(queries.createUser,values,(err,data)=>{
@@ -15,6 +19,11 @@ class UserModel {
            }
       });
     }
+     /**
+     * @description: Authenticates user information from the database
+     * @param {*} loginData
+     * @param {*}  authenticateUser
+     */
     loginUser = (loginData, authenticateUser) => {
       const query = [loginData.email,loginData.password];
       pool.query(queries.loginUser,query,(err, data) => {
@@ -29,8 +38,8 @@ class UserModel {
             console.log(data.rows[0]);
             return authenticateUser(null, data.rows[0]);
           }
-            }
-          });
-      };  
-  }
+          }
+        });
+    };  
+}
 module.exports = new UserModel();
