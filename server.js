@@ -1,22 +1,20 @@
-//import express librar
+//import express library
 const express = require('express');
-const bodyParser = require('body-parser');
-
+require("dotenv").config;
 //create app
 const app = express();
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }))
-
 // parse requests of content-type - application/json
 app.use(express.json())
-
-// define a simple route
+// route
 app.get('/', (req, res) => {
     res.json({"message": "Welcome to Fundoo Notes App"});
 });
 
-// listen for requests
+require('./app/routes/user.routes')(app)
+
+// listen to the request
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
+module.exports = app;
