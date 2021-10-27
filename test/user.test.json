@@ -1,0 +1,35 @@
+{
+    "user":{
+        "validDetails":{
+        "firstName":"Mangesh",
+        "lastName":"Chavan",
+        "email":"mangesh123@gmail.com",
+        "password":"Mangesh@123"
+        },
+        "detailsWithEmptydFirstName":{
+            "firstName":"",
+            "lastName":"Chavan",
+            "email":"mangesh123@gmail.com",
+            "password":"Mangesh@123"
+        },
+        "detailsWithEmptyLastName":{
+            "firstName":"Mangesh",
+            "lastName":"",
+            "email":"mangesh123@gmail.com",
+            "password":"Mangesh@123"
+        },
+        "detailsWithInvalidmail":{
+            "firstName":"Shubham",
+            "lastName":"Bodake",
+            "email":"shubham123@gmail.com",
+            "password":"Shubham@123"
+        },
+        "detailsWithWeakPassword":{
+            "firstName":"Shubham",
+            "lastName":"Bodake",
+            "email":"shubham123@gmail.com",
+            "password":"Shubham123"
+        }
+    }
+
+}
