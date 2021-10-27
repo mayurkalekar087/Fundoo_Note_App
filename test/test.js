@@ -81,3 +81,74 @@ describe("User Registration ", () => {
         });
     });
 });
+
+
+describe("Login", () => {
+
+it("givenLoginDetails_whenProper_UserLogin_successfully", (done) => {
+      const loginDetails = user.user.login
+      chai
+        .request(server)
+        .post("/login") 
+        .send(loginDetails)
+        .end((err, res) => {
+          if (err) {
+            console.log("error")
+          }
+          res.should.have.status(200);
+          done();
+        });
+    });
+    /**
+     * it function for login when user login with Wrong Password.
+     * */
+
+    it("givenLoginDetails_when_WrongPassword", (done) => {
+      const loginDetails = user.user.loginWrongPassword
+      chai
+        .request(server)
+        .post("/login")
+        .send(loginDetails)
+        .end((err, res) => {
+          if (err) {
+            console.log("error")
+          }
+          res.should.have.status(400);
+          done();
+        });
+    });
+    /**
+     * it function for login when user login with Without Password.
+     * */
+    it("givenLoginDetails_whenNo_Password", (done) => {
+      const loginDetails = user.user.loginWithoutPassword
+      chai
+        .request(server)
+        .post("/login")
+        .send(loginDetails)
+        .end((err, res) => {
+          if (err) {
+            console.log("error")
+          }
+          res.should.have.status(400);
+          done();
+        });
+    });
+    /**
+     * it function for login when user login With Wrong Email.
+     * */
+    it( "givenLoginDetails_whenWrongEmail", (done) => {
+      const loginDetails = user.user.loginWithWrongEmail
+      chai
+        .request(server)
+        .post("/login")
+        .send(loginDetails)
+        .end((err, res) => {
+          if (err) {
+            console.log("error")
+          }
+          res.should.have.status(400);
+          done();
+        });
+    });
+  });

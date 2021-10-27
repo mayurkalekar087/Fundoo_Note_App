@@ -29,7 +29,22 @@
             "lastName":"Bodake",
             "email":"shubham123@gmail.com",
             "password":"Shubh"
+        },
+        "login": {
+            "email":"caran@hmail.com",
+            "password":"Caran@0025"
+        },
+        "loginWrongPassword": {
+            "email":"caran@hmail.com",
+            "password":"Caran002"
+        },
+        "loginWithoutPassword": {
+            "email":"caran@hmail.com",
+            "password":""
+        },
+        "loginWithWrongEmail": {
+            "email":"aran@hmail.com",
+            "password":"Caran@0025"
         }
     }
-
-}
+} 
