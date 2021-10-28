@@ -1,6 +1,6 @@
 const queries = require("..//queries/user.queries");
 const pool = require("..//../config/database.config");
-const { login } = require("../controller/user.controller");
+const { logger } = require("../../logger/logger");
 
 class UserModel {
   /**
@@ -12,9 +12,11 @@ class UserModel {
   const values = [userDetails.firstName,userDetails.lastName,userDetails.email,userDetails.password];
       pool.query(queries.createUser,values,(err,data)=>{
           if(err) {
+            logger.error("Find error in model");
              callback(err.stack,null);
           }else
           {
+          logger.info("User suucesfully registered");
            console.log(data.rows[0]);
            callback(null,data.rows[0]);
           }
@@ -30,16 +32,19 @@ class UserModel {
      
       pool.query(queries.loginUser,query,(err, data) => {
         if (!data) {
+          logger.error("Find error while loggin user");
           return authenticateUser("Invalid User", null);
         }
         if (data.rows.length===0) {
+          logger.error("Invalid User");
           return authenticateUser("invalid User",null);
         }
         if (data){
+            logger.info("Email id found");
             console.log(data.rows[0]);
             return authenticateUser(null, data.rows[0]);
         }
         });
-    };  
+    };
 }
 module.exports = new UserModel();

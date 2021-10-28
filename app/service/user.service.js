@@ -1,6 +1,7 @@
 const  bcrypt  = require("bcryptjs");
 const UserModel = require("..//models/user.model");
 const auth = require("..//utility/user.authenticate");
+const { logger } = require("../../logger/logger");
 
 class UserService {
       /**
@@ -26,6 +27,7 @@ class UserService {
       loginUser = (loginData, authenticateUser) => {
         UserModel.loginUser(loginData,async (err, data) => {
                     if (err) {
+                    logger.error("Error found in service");
                     return authenticateUser(err, null);
                     }
                     else {
@@ -33,8 +35,10 @@ class UserService {
                     console.log(result);
                     if(result) {
                     const token = auth.generateToken(data);
+                    logger.info("Valid Password");
                     return authenticateUser(null,token);
                     } else {
+                    logger.error("Password does not match");
                     return authenticateUser('Password does not match', null);
                     }
                 };

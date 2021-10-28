@@ -1,6 +1,7 @@
 const UserService = require("..//service/user.service");
 const {authUserRegister,authUserLogin} = require("..//utility/user.validation");
 const {genSaltSync,hashSync} = require('bcrypt');
+const { logger } = require("../../logger/logger");
 
 class UserDataController {
    /**
@@ -27,6 +28,7 @@ class UserDataController {
                     message: "Enter valid fields",
                     data: registerValidation
                 });
+                logger.error("Invalid Details");
                 return;
             }
         UserService.registerUser(userData, (err, data) => {
@@ -36,6 +38,7 @@ class UserDataController {
                     message: 'User allready exist'
                 });
             } else {
+                logger.info("User registered");
                 res.status(201).json({
                 success: true,
                 message: 'user successfully registered',
@@ -44,6 +47,7 @@ class UserDataController {
           }
         });
     }catch (err) {
+      logger.error("Internal server error");
         return res.status (500).json({
             success: false,
             message: 'Server-Error',
@@ -71,7 +75,7 @@ login = (req, res) =>  {
                   data: loginValidation
               });
               return;
-          };
+        };
     UserService.loginUser(loginData,(err, data) => {
       if (err) {
         return res.status(400).send({
@@ -95,5 +99,9 @@ login = (req, res) =>  {
     });
   }
 }
+
+
+
+
 }
 module.exports = new UserDataController();
