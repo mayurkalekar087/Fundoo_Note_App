@@ -17,8 +17,9 @@ class UserDataController {
             email: req.body.email,
             password: req.body.password,
         };
-        const Salt = genSaltSync(10);
-        userData.password = hashSync(req.body.password,Salt);
+        const salt = genSaltSync(10);
+        userData.password = hashSync(req.body.password,salt);
+       
         const registerValidation = authUserRegister.validate(userData);
             if(registerValidation.error) {
                 res.status(400).send({
@@ -30,7 +31,7 @@ class UserDataController {
             }
         UserService.registerUser(userData, (err, data) => {
             if (err) {
-                return res.status(409).json({
+                return res.status(201).json({
                     success: false,
                     message: 'User allready exist'
                 });
@@ -40,7 +41,7 @@ class UserDataController {
                 message: 'user successfully registered',
                 data: data
             });
-        }
+          }
         });
     }catch (err) {
         return res.status (500).json({
@@ -71,7 +72,7 @@ login = (req, res) =>  {
               });
               return;
           };
-    UserService.loginUser(loginData, (err, data) => {
+    UserService.loginUser(loginData,(err, data) => {
       if (err) {
         return res.status(400).send({
           success: false,
@@ -79,13 +80,15 @@ login = (req, res) =>  {
           err,
         });
       }
+      if(data){
       return res.status(200).send({
         success: true,
         message: 'logged in successfully',
-         token: data
+        token: data
       });
+    }
     });
-  } catch (err) {
+    }catch (err) {
     return res.status(500).send({
       success: false,
       message: 'server error',

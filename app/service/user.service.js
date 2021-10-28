@@ -1,3 +1,4 @@
+const  bcrypt  = require("bcryptjs");
 const UserModel = require("..//models/user.model");
 const auth = require("..//utility/user.authenticate");
 
@@ -22,19 +23,22 @@ class UserService {
      * @param {*} loginData
      * @param {*} authenticateUser
      */
-    loginUser = (loginData, authenticateUser) => {
-        UserModel.loginUser(loginData, (err, data) => {
-            if (err) {
-                authenticateUser(err, null);
-            }
-            if(data) {
-                const token = auth.generateToken(data);
-                authenticateUser(null, token);
-            }else {
-                console.log(data);
-                authenticateUser(null, data);
-            }
-        });
-    };
-}
+      loginUser = (loginData, authenticateUser) => {
+        UserModel.loginUser(loginData,async (err, data) => {
+                    if (err) {
+                    return authenticateUser(err, null);
+                    }
+                    else {
+                    const result = await bcrypt.compare(loginData.password, data.password)
+                    console.log(result);
+                    if(result) {
+                    const token = auth.generateToken(data);
+                    return authenticateUser(null,token);
+                    } else {
+                    return authenticateUser('Password does not match', null);
+                    }
+                };
+            });
+        }
+    }
 module.exports = new UserService();

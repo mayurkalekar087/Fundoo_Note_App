@@ -1,5 +1,6 @@
 const queries = require("..//queries/user.queries");
 const pool = require("..//../config/database.config");
+const { login } = require("../controller/user.controller");
 
 class UserModel {
   /**
@@ -25,20 +26,19 @@ class UserModel {
      * @param {*}  authenticateUser
      */
     loginUser = (loginData, authenticateUser) => {
-      const query = [loginData.email,loginData.password];
+      const query = [loginData.email];
+     
       pool.query(queries.loginUser,query,(err, data) => {
-        if (data.rows.length===0) {
-          return authenticateUser("invalid User");
-        }
-        else{  
-          if (!data) {
+        if (!data) {
           return authenticateUser("Invalid User", null);
         }
-        else{
+        if (data.rows.length===0) {
+          return authenticateUser("invalid User",null);
+        }
+        if (data){
             console.log(data.rows[0]);
             return authenticateUser(null, data.rows[0]);
-          }
-          }
+        }
         });
     };  
 }
