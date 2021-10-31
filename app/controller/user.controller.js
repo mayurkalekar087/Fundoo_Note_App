@@ -1,5 +1,5 @@
 const UserService = require("..//service/user.service");
-const {authUserRegister,authUserLogin} = require("..//utility/user.validation");
+const {authUserRegister,authUserLogin,authUserforgot} = require("..//utility/user.validation");
 const {genSaltSync,hashSync} = require('bcrypt');
 const { logger } = require("../../logger/logger");
 
@@ -99,9 +99,51 @@ login = (req, res) =>  {
     });
   }
 }
-
-
-
-
+/**
+     * @description : forgot password
+     * @param {*} req
+     * @param {*} res
+     * @returns
+     */
+forgotPassword = (req, res) => {
+  try {
+    const user = {
+      email: req.body.email
+    };
+    const emailValidation = authUserforgot.validate(user);
+    if (emailValidation.error) {
+      res.status(400).send({
+        success: false,
+        message: "check inserted fields",
+        data: emailValidation
+      });
+      return;
+    }
+    UserService.forgotPassword(user, (error, data) => {
+      if (error) {
+          logger.error("email id is not exist");
+            return res.status(409).json({
+              success: false,
+              message: "email id is not exist"
+            });
+          } else {
+            logger.info("email send Successfully");
+            res.status(201).json({
+              success: true,
+              data: data,
+              message: "email send successfully"
+              
+            });
+          }
+        });
+      } catch (error) {
+        logger.error("server-error");
+        return res.status(500).json({
+          success: false,
+          data: null,
+          message: "server-error"
+       });
+    }
+  };   
 }
 module.exports = new UserDataController();

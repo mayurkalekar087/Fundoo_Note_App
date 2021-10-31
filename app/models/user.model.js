@@ -46,5 +46,25 @@ class UserModel {
         }
         });
     };
+    /**
+     * @description:checks if emailId is present inside database
+     * @param {*} email
+     * @param {*} callback
+     */
+    forgotPassword = (userDetails, callback) => {
+      try {
+        const query = [userDetails.email];
+        pool.query(queries.loginUser,query, (err, data) => {
+          if (err || !data) {
+            return callback(err + "invalid email", null);
+          } else {
+            return callback(null, data);
+          }
+        });
+      } catch (error) {
+        logger.error("Internal Error");
+        return callback("Internal Error", null);
+      }
+    }
 }
 module.exports = new UserModel();

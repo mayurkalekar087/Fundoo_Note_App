@@ -2,6 +2,7 @@ const  bcrypt  = require("bcryptjs");
 const UserModel = require("..//models/user.model");
 const auth = require("..//utility/user.authenticate");
 const { logger } = require("../../logger/logger");
+const mailUser = require("..//utility/user.nodemailer");
 
 class UserService {
       /**
@@ -24,7 +25,7 @@ class UserService {
      * @param {*} loginData
      * @param {*} authenticateUser
      */
-      loginUser = (loginData, authenticateUser) => {
+        loginUser = (loginData, authenticateUser) => {
         UserModel.loginUser(loginData,async (err, data) => {
                     if (err) {
                     logger.error("Error found in service");
@@ -34,7 +35,7 @@ class UserService {
                     const result = await bcrypt.compare(loginData.password, data.password)
                     console.log(result);
                     if(result) {
-                    const token = auth.generateToken(data);
+                    const token = auth.jwtTokenGenerate(data);
                     logger.info("Valid Password");
                     return authenticateUser(null,token);
                     } else {
@@ -43,6 +44,15 @@ class UserService {
                     }
                 };
             });
+        }
+        forgotPassword = (user, callback) => {
+            UserModel.forgotPassword(user, (err, data) => {
+              if (err || !data) {
+                return callback(err, null);
+              } else {
+                return callback(null,mailUser.sendEmail(data));
+            }
+          });
         }
     }
 module.exports = new UserService();
