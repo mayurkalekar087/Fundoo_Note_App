@@ -1,6 +1,6 @@
 const  bcrypt  = require("bcryptjs");
 const UserModel = require("..//models/user.model");
-const auth = require("..//utility/user.authenticate");
+const Helper = require("..//utility/user.authenticate");
 const { logger } = require("../../logger/logger");
 const mailUser = require("..//utility/user.nodemailer");
 
@@ -35,7 +35,7 @@ class UserService {
                     const result = await bcrypt.compare(loginData.password, data.password)
                     console.log(result);
                     if(result) {
-                    const token = auth.jwtTokenGenerate(data);
+                    const token = Helper.jwtTokenGenerate(data);
                     logger.info("Valid Password");
                     return authenticateUser(null,token);
                     } else {
@@ -50,7 +50,8 @@ class UserService {
               if (err || !data) {
                 return callback(err, null);
               } else {
-                return callback(null,mailUser.sendEmail(data));
+                const token = Helper.jwtTokenGenerate(data);
+                return callback(null,mailUser.sendEmail(token));
             }
           });
         }

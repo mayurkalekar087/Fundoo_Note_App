@@ -1,24 +1,8 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const { logger } = require("../../logger/logger");
-const bcrypt = require("bcrypt");
+//const { logger } = require("../../logger/logger");
 
 class Helper {
-    hashing = (password, callback) => {
-      bcrypt.hash(password, 10, (err, hashpassword) => {
-        if (err) {
-          logger.error("error is hashing");
-          return callback(err, null);
-        } else {
-          return callback(null, hashpassword);
-        }
-      });
-    };
-    /**
-       * Generate Token
-       * @param {*} data
-       * @param {*} callback
-       */
   
     jwtTokenGenerate = (data) => {
       const dataForToken = {

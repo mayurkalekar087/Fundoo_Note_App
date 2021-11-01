@@ -130,10 +130,9 @@ forgotPassword = (req, res) => {
             logger.info("email send Successfully");
             res.status(201).json({
               success: true,
-              data: data,
+              token:data,
               message: "email send successfully"
-              
-            });
+              });
           }
         });
       } catch (error) {
