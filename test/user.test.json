@@ -45,6 +45,12 @@
         "loginWithWrongEmail": {
             "email": "jasprit123gmail.com",
             "password": "jasprit@123"
+        },
+        "userForgotPassword": {
+        "email": "mayurkalekar087@gmail.com"
+        },
+        "userForgotPasswordisInvalid": {
+        "email": "mayurkalekar@gmail"
         }
-    }
-} 
+    } 
+}
