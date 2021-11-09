@@ -1,6 +1,8 @@
 const queries = require("..//queries/user.queries");
 const pool = require("..//../config/database.config");
 const { logger } = require("../../logger/logger");
+const Helper = require("../utility/user.authenticate");
+
 
 class UserModel {
   /**
@@ -17,8 +19,8 @@ class UserModel {
           }else
           {
           logger.info("User suucesfully registered");
-           console.log(data.rows[0]);
-           callback(null,data.rows[0]);
+          console.log(data.rows[0]);
+          callback(null,data.rows[0]);
           }
       });
     }
@@ -43,12 +45,12 @@ class UserModel {
             logger.info("Email id found");
             console.log(data.rows[0]);
             return authenticateUser(null, data.rows[0]);
-        }
+          }
         });
     };
     /**
      * @description:checks if emailId is present inside database
-     * @param {*} email
+     * @param {*} userDetails
      * @param {*} callback
      */
     forgotPassword = (userDetails, callback) => {
@@ -66,5 +68,29 @@ class UserModel {
         return callback("Internal Error", null);
       }
     }
-}
+     /**
+     * @description:looks for data by id and updates password
+     * @param {*} resetInfo
+     * @param {*} callback
+     */
+      resetPassword = (resetInfo, callback) => {
+        Helper.hashing(resetInfo.newPassword, (err, hashedPassword) => {
+          if (err) {
+            throw err;
+          } else {
+            const values = [hashedPassword,resetInfo.email]
+            console.log(values);
+            pool.query(queries.updateUser,values, (error, data) => {
+              if (data) {
+                logger.info("Password Updated successfully");
+                return callback(null, data);
+              } else {
+                logger.info(error);
+                return callback(error, null);
+              }
+            });
+          }
+        });
+      }
+    }
 module.exports = new UserModel();
