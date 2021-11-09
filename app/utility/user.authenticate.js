@@ -14,34 +14,49 @@ class Helper {
       }
     });
   };
+  /**
+     * @description   : creating token using jsonwebtoken module
+     * @param {data} as data which comes from the body of postmen
+     * @module        : jwt
+    */
   jwtTokenGenerate = (data) => {
       const dataForToken = {
         id: data.id,
-        firstName: data.firstName,
-        lastName: data.lastName,
+        firstName:data.firstName,
+        lastName:data.lastName,
         email:data.email
       };
-      console.log(dataForToken);
     return jwt.sign(dataForToken, process.env.ACCESS_TOKEN_KEY , { expiresIn: "24H" });
     };
+     /**
+    * @description function checks and validates the user token and authorises only if token is correct
+    * @param {*} req
+    * @param {*} res
+    * @param {*} next
+    * @returns
+    */
     verifyToken = (req, res, next) => {
-      try{
         const header = req.headers.authorization;
         const myArr = header.split(" ");
-        const code = myArr[1];
-        const decode = jwt.verify(code, process.env.ACCESS_TOKEN_KEY);
-        
-        if (decode) {
-          logger.info("token verified");
-          req.userData = decode;
-          next();
+        const token = myArr[1];
+        try{
+          if(token){
+            //console.log("token:: " + token);
+         jwt.verify(token, process.env.ACCESS_TOKEN_KEY,(error,decoded)=>{
+          if (error) {
+            return res.status(400).send({ success: false, message: "Invalid Token" });
+          }else{
+            logger.info("token verified");
+            req.userData = decoded;
+            next();
+          }
+         });
         } else {
           logger.info("token verify error");
+          return res.status(401).send({ success: false, message: "Authorisation failed! Invalid user" });
         }
       } catch (error) {
-        res.status(401).send({
-          error: "Your token has expiered"
-        });
+          return res.status(500).send({ success: false, message: "Something went wrong!" });
       }
   };
 }

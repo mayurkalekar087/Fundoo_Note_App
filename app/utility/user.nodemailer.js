@@ -7,7 +7,7 @@ const queries = require("..//queries/user.queries");
 const userModel = require('../models/user.model');
 
 exports.sendEmail = (data,callback) => {
-    let code = Math.random().toString(36).substring(2, 15)
+    //let code = Math.random().toString(36).substring(2, 15)
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
@@ -20,20 +20,20 @@ exports.sendEmail = (data,callback) => {
       }
     });
     logger.info("Jwt Token Generate");
-    //const token = Helper.jwtTokenGenerate(data);
+    const token = Helper.jwtTokenGenerate(data);
     const mailOptions = {
       from: process.env.EMAIL,
       to: "mayurkalekar087@gmail.com",
       subject: "Reset password Link",
       html: `<h2>please click on this link to change the password</h2>
-                  <p>${process.env.CLIENT_URL}/resetpassword/${code}</p>
+                  <p>${process.env.CLIENT_URL}/resetpassword/${token}</p>
                   `
     };
     transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
         return callback(err,null);
       } else {
-            const values = [code,process.env.EMAIL];
+            const values = [token,process.env.EMAIL];
             console.log(values);
             pool.query(queries.resetUser,values);
             };
