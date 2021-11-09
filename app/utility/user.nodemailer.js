@@ -2,9 +2,12 @@ const nodemailer = require('nodemailer');
 require('dotenv').config
 const Helper = require('..//utility/user.authenticate');
 const { logger } = require("../../logger/logger");
-const { getMaxListeners } = require('superagent');
+const pool = require('../../config/database.config');
+const queries = require("..//queries/user.queries");
+const userModel = require('../models/user.model');
 
-exports.sendEmail = (data) => {
+exports.sendEmail = (data,callback) => {
+    let code = Math.random().toString(36).substring(2, 15)
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
@@ -17,26 +20,23 @@ exports.sendEmail = (data) => {
       }
     });
     logger.info("Jwt Token Generate");
-    const token = Helper.jwtTokenGenerate(data);
+    //const token = Helper.jwtTokenGenerate(data);
     const mailOptions = {
       from: process.env.EMAIL,
       to: "mayurkalekar087@gmail.com",
       subject: "Reset password Link",
       html: `<h2>please click on this link to change the password</h2>
-                  <p>${process.env.CLIENT_URL}/resetpassword/${token}</p>
+                  <p>${process.env.CLIENT_URL}/resetpassword/${code}</p>
                   `
     };
-    transporter.sendMail(mailOptions, (err, info) => {
+    transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
-        console.log("err",err);
-        return (err,null);
+        return callback(err,null);
       } else {
-        console.log(info);
-        const data = {
-          link: process.env.CLIENT_URL + "/resetpassword/" + token,
-          response: info.response
-        };
-        return (data);
-      }
-  });
+            const values = [code,process.env.EMAIL];
+            console.log(values);
+            pool.query(queries.resetUser,values);
+            };
+        return callback(null,data);
+     });
 };
