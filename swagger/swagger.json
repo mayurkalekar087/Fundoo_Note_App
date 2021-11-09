@@ -2,9 +2,9 @@
     "swagger": "2.0",
     "info": {
         "version": "1.0",
-        "title": "Fundoo Notes App",
+        "title": "Fundoo Notes",
         "description": "Fundoo Notes Application",
-
+        
         "license": {
             "name": "MIT",
             "url": "https://opensource.org/licenses/MIT"
@@ -16,7 +16,6 @@
     "schemes": ["http"],
     "consumes": ["application/json"],
     "produces": ["application/json"],
-
     "paths": {
         "/register": {
             "post": {
@@ -32,7 +31,6 @@
                         }
                     }
                 ],
-
                 "produces": ["application/json"],
                 "responses": {
                     "201": {
@@ -47,7 +45,6 @@
                 }
             }
         },
-
         "/login": {
             "post": {
                 "tags": ["Login"],
@@ -62,7 +59,6 @@
                         }
                     }
                 ],
-
                 "produces": ["application/json"],
                 "responses": {
                     "200": {
@@ -75,7 +71,7 @@
             }
         },
         "/forgotpassword": {
-            "put": {
+            "post": {
                 "tags": ["forgotPassword"],
                 "description": "Send password link",
                 "parameters": [
@@ -88,7 +84,31 @@
                         }
                     }
                 ],
-
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/resetpassword": {
+            "post": {
+                "tags": ["resetpassword"],
+                "description": "Saves new password in DB",
+                "parameters": [
+                    {
+                        "name": "resetpassword",
+                        "in": "body",
+                        "description": "Reset password",
+                        "schema": {
+                            "$ref": "#/definitions/resetpassword"
+                        }
+                    }
+                ],
                 "produces": ["application/json"],
                 "responses": {
                     "200": {
@@ -101,7 +121,6 @@
             }
         }
     },
-
     "definitions": {
         "registerUser": {
             "type": "object",
@@ -120,7 +139,6 @@
                 }
             }
         },
-
         "loginUser": {
             "type": "object",
             "properties": {
@@ -136,6 +154,17 @@
             "type": "object",
             "properties": {
                 "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "resetpassword": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "password": {
                     "type": "string"
                 }
             }
