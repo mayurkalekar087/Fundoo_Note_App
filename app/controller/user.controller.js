@@ -1,5 +1,5 @@
 const UserService = require("..//service/user.service");
-const {authUserRegister,authUserLogin,authUserforgot} = require("..//utility/user.validation");
+const {authUserRegister,authUserLogin,authUserforgot,validateReset} = require("..//utility/user.validation");
 const {genSaltSync,hashSync} = require('bcrypt');
 const { logger } = require("../../logger/logger");
 
@@ -107,7 +107,7 @@ login = (req, res) =>  {
      */
 forgotPassword = (req, res) => {
   try {
-    const user = {
+      const user = {
       email: req.body.email
     };
     const emailValidation = authUserforgot.validate(user);
@@ -133,7 +133,7 @@ forgotPassword = (req, res) => {
               token:data,
               message: "email send successfully"
               });
-          }
+            }
         });
       } catch (error) {
         logger.error("server-error");
@@ -144,5 +144,50 @@ forgotPassword = (req, res) => {
        });
     }
   };   
+/**
+     * @description:calls service layer to reset password
+     * @param {*} req
+     * @param {*} res
+     * @returns
+     */
+ resetPassword = (req, res) => {
+  try {
+    const resetInfo = {
+      email: req.userData.email,
+      id: req.userData.id,
+      newPassword: req.body.password
+    };
+    const resetVlaidation = validateReset.validate(resetInfo);
+      if (resetVlaidation.error) {
+        logger.error("Invalid password");
+        res.status(400).send({
+          success: false,
+          message: "Invalid password"
+        });
+        return;
+      }
+    UserService.resetPassword(resetInfo, (error, data) => {
+      if (data) {
+          logger.info("Password reset successfully");
+          return res.status(200).json({
+          success: true,
+          message: "Password reset successfully"
+        });
+      } else {
+          logger.error(error);
+          return res.status(401).json({
+          success: false,
+          message: error
+        });
+      }
+    });
+  }catch (error) {
+    return res.status(500).json({
+      success: false,
+      data: null,
+      message: "server-error"
+    });
+  }
+}
 }
 module.exports = new UserDataController();
