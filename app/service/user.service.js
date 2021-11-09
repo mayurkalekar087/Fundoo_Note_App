@@ -37,23 +37,34 @@ class UserService {
                     if(result) {
                     const token = Helper.jwtTokenGenerate(data);
                     logger.info("Valid Password");
-                    return authenticateUser(null,token);
+                    return authenticateUser(null,{data,token});
                     } else {
                     logger.error("Password does not match");
                     return authenticateUser('Password does not match', null);
-                    }
+                  }
                 };
             });
-        }
+          }
         forgotPassword = (user, callback) => {
             UserModel.forgotPassword(user, (err, data) => {
               if (err || !data) {
                 return callback(err, null);
               } else {
-                const token = Helper.jwtTokenGenerate(data);
-                return callback(null,mailUser.sendEmail(token));
-            }
-          });
+                console.log(data);
+                //const token = Helper.jwtTokenGenerate(data);
+                return callback(null,mailUser.sendEmail(data));
+              }
+            });
+          }
+        
+        resetPassword = (resetInfo, callback) => {
+            UserModel.resetPassword(resetInfo, (error, data) => {
+              if (data) {
+                return callback(null, data);
+              } else {
+                return callback(error, null);
+              }
+            });
+          };
         }
-    }
 module.exports = new UserService();
