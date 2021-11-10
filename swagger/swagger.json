@@ -84,6 +84,7 @@
                         }
                     }
                 ],
+
                 "produces": ["application/json"],
                 "responses": {
                     "200": {
@@ -98,7 +99,7 @@
         "/resetpassword": {
             "post": {
                 "tags": ["resetpassword"],
-                "description": "Saves new password in DB",
+                "description": "Reset Password",
                 "parameters": [
                     {
                         "name": "resetpassword",
@@ -109,6 +110,7 @@
                         }
                     }
                 ],
+
                 "produces": ["application/json"],
                 "responses": {
                     "200": {
@@ -136,6 +138,9 @@
                 },
                 "password": {
                     "type": "string"
+                },
+                "confirmPassword": {
+                    "type": "string"
                 }
             }
         },
@@ -157,6 +162,7 @@
                     "type": "string"
                 }
             }
+
         },
         "resetpassword": {
             "type": "object",
