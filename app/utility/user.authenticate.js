@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { logger } = require("../../logger/logger");
 const bcrypt = require("bcrypt");
-
+const queries = require("..//queries/user.queries");
+const pool = require('..//..//config/database.config');
 
 class Helper {
   hashing = (password, callback) => {
@@ -34,28 +35,22 @@ class Helper {
     * @param {*} next
     * @returns
     */
-    verifyToken = (req, res, next) => {
-    const header = req.headers.authorization;
-    console.log("header:: " + header);
-    const myArr = header.split("bearer");
-    const token = myArr[1];
-    console.log("token:: " + token);
-     try {
-       if (token) {
-         jwt.verify(token, process.env.SECRET_KEY_FOR_RESET, (err, decodedToken) => {
-           if (err) {
-             return res.status(400).send({ success: false, message: "Invalid Token" });
-           } else {
-             req.data.id = decodedToken;
-             next();
-           }
-         });
-       } else {
-         return res.status(401).send({ success: false, message: "Authorisation failed! Invalid user" });
+   verifyToken = (req,res,next)=>{
+     try{
+     const values = [process.env.email]
+     console.log(values);
+     pool.query(queries.verifyToken,values,(err,data)=>{
+       if(err){
+         return res.status(404).send({success:false,message:"invalid"});
        }
-     } catch (error) {
-       return res.status(500).send({ success: false, message: "Something went wrong!" });
-     }
-   }
+       if(data){
+         return res.status(201).send({success:true,message:"token verified"});
+         next();
+       }
+     })
+   }catch(error){
+     return res.status(500).send({success:false,message:"something went wrong"});
+    }
+  }
 }
 module.exports = new Helper();

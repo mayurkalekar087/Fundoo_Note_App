@@ -6,7 +6,7 @@ const pool = require('../../config/database.config');
 const queries = require("..//queries/user.queries");
 //const userModel = require('../models/user.model');
 
-exports.sendEmail = (data,callback) => {
+ exports.sendEmail = (data,callback) => {
     let code = Math.random().toString(36).substring(2, 15)
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -20,7 +20,7 @@ exports.sendEmail = (data,callback) => {
       }
     });
     logger.info("Jwt Token Generate");
-    const token = Helper.jwtTokenGenerate(data);
+    //const token = Helper.jwtTokenGenerate(data);
     const mailOptions = {
       from: process.env.EMAIL,
       to: "mayurkalekar087@gmail.com",
@@ -39,5 +39,4 @@ exports.sendEmail = (data,callback) => {
             };
         return callback(null,data);
      });
-};
-
+}
