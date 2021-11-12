@@ -1,7 +1,9 @@
 const queries = require("..//queries/user.queries");
+require('dotenv').config();
 const pool = require("..//../config/database.config");
 const { logger } = require("../../logger/logger");
 const Helper = require("../utility/user.authenticate");
+const auth = require("..//utility/user.nodemailer")
 
 
 class UserModel {
@@ -78,8 +80,8 @@ class UserModel {
           if (err) {
             throw err;
           } else {
-            const values = [hashedPassword,resetInfo.email]
-            console.log(values);
+            const values = [hashedPassword,process.env.EMAIL]
+            console.log("bcrypt pw"+ values);
             pool.query(queries.updateUser,values, (error, data) => {
               if (data) {
                 logger.info("Password Updated successfully");

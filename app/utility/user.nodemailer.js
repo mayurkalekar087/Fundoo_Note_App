@@ -1,12 +1,11 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config
-const Helper = require('..//utility/user.authenticate');
 const { logger } = require("../../logger/logger");
 const pool = require('../../config/database.config');
 const queries = require("..//queries/user.queries");
-//const userModel = require('../models/user.model');
 
- exports.sendEmail = (data,callback) => {
+class auth {
+    sendEmail = (data,callback) => {
     let code = Math.random().toString(36).substring(2, 15)
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -38,5 +37,8 @@ const queries = require("..//queries/user.queries");
             pool.query(queries.resetUser,values);
             };
         return callback(null,data);
-     });
+     });    
+
+    }
 }
+module.exports = new auth();

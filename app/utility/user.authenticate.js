@@ -37,16 +37,17 @@ class Helper {
     */
    verifyToken = (req,res,next)=>{
      try{
-     const values = [process.env.email]
-     console.log(values);
-     pool.query(queries.verifyToken,values,(err,data)=>{
+       const code  = req.body.token;
+       console.log(code);
+      const values = [process.env.email]
+      pool.query(queries.verifyToken,values,(err,data)=>{
        if(err){
          return res.status(404).send({success:false,message:"invalid"});
-       }
-       if(data){
-         return res.status(201).send({success:true,message:"token verified"});
-         next();
-       }
+       }else{
+        (data==code)
+        //return res.status(201).send({success:true,message:"token verified"});
+        next();
+        }
      })
    }catch(error){
      return res.status(500).send({success:false,message:"something went wrong"});

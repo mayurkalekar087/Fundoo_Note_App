@@ -153,19 +153,10 @@ forgotPassword = (req, res) => {
  resetPassword = (req, res) => {
   try {
     const resetInfo = {
-      email: req.userData.email,
-      id: req.userData.id,
+
+      token:req.body.token,
       newPassword: req.body.password
     };
-    const resetVlaidation = validateReset.validate(resetInfo);
-      if (resetVlaidation.error) {
-        logger.error("Invalid password");
-        res.status(400).send({
-          success: false,
-          message: "Invalid password"
-        });
-        return;
-      }
     UserService.resetPassword(resetInfo, (error, data) => {
       if (data) {
           logger.info("Password reset successfully");
