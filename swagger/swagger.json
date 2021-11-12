@@ -121,8 +121,48 @@
                     }
                 }
             }
+        },
+        "/createnotes": {
+            "post": {
+                "tags": ["Create Notes"],
+                "description": "Create a  note !!",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }, {
+                        "name": "create note",
+                        "in": "body",
+                        "description": "Note's body",
+                        "schema": {
+                            "$ref": "#/definitions/notes"
+                        }
+                    }
+                ],
+                "produces": ["application/json"],
+                "schema": {
+                    "$ref": "#/definitions/notes"
+                },
+                "responses": {
+                    "201": {
+                        "description": "Create note succesfully !!"
+                    },
+                    "400": {
+                        "description": "Please enter Valid Token"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
+    
     "definitions": {
         "registerUser": {
             "type": "object",
@@ -173,6 +213,21 @@
                 "password": {
                     "type": "string"
                 }
+            }
+        },
+        "notes": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "title": "Tittle",
+                "description": "description"
             }
         }
     }
