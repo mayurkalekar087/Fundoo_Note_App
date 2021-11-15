@@ -162,7 +162,7 @@ describe("User Registration ", () => {
           if (error) {
             return done("Invalid details received instead of valid");
           }
-          res.should.have.status(404);
+          res.should.have.status(201);
           return done();
         });
     });
@@ -196,7 +196,7 @@ describe("User Registration ", () => {
           res.body.should.have.property("success").eql(true);
           res.body.should.have
             .property("message")
-            .eql("Password reset");
+            .eql("Password reset successfully");
           done();
         });
     });
