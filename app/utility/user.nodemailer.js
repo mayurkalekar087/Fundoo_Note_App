@@ -25,20 +25,18 @@ class auth {
       to: "mayurkalekar087@gmail.com",
       subject: "Reset password Link",
       html: `<h2>please click on this link to change the password</h2>
-                  <p>/resetpassword/${code}</p>
-                  `
+      <p>/resetpassword/${code}</p>
+  `
     };
     transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
         return callback(err,null);
       } else {
             const values = [code,process.env.EMAIL];
-            console.log(values);
             pool.query(queries.resetUser,values);
             };
         return callback(null,data);
-     });    
-
-    }
+     });
+    }    
 }
 module.exports = new auth();
