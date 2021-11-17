@@ -85,5 +85,37 @@ class noteController {
         });
       }
     }
+    updateNoteById =(req, res) => {
+      try {
+        const updateNote = {
+          note_id: req.body.note_id,
+          user_id: req.body.user_id,
+          title: req.body.title,
+          description: req.body.description
+        };
+        noteService.updateNoteById(updateNote, (error, data) => {
+          if (error) {
+            logger.error("Note not updated");
+            return res.status(400).json({
+              message: "Note not updated",
+              success: false
+            });
+          } else {
+            logger.info("Successfully note updated");
+            return res.status(201).send({
+              message: "Successfully note updated",
+              success: true,
+              data: data
+            });
+          }
+        });
+      } catch {
+        logger.error("Internal server error");
+        return res.status(500).json({
+          message: "Internal server error",
+          success: false
+        });
+      }
+    }
 }
 module.exports = new noteController();
