@@ -10,6 +10,7 @@ module.exports = (app) => {
     app.post("/resetpassword",Helper.verifyString, UserDataController.resetPassword);
     app.post("/createnotes", Helper.verifyToken,noteController.createNote);
     app.get("/getnotes", Helper.verifyToken,noteController.getNote);
-    app.get("/getnotesbyid/", Helper.verifyToken, noteController.getNoteById);
-    app.put("/updatenotes/", Helper.verifyToken, noteController.updateNoteById);
+    app.get("/getnotesbyid/:note_id", Helper.verifyToken, noteController.getNoteById);
+    app.put("/updatenotes/:note_id", Helper.verifyToken, noteController.updateNoteById);
+    app.delete("/deletenotes/:note_id", Helper.verifyToken, noteController.deleteNoteById);
 };

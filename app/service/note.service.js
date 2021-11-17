@@ -46,5 +46,12 @@ class Service {
       }
       )
     }
+    deleteNoteById =  (id) => {
+      try {
+        return  noteModel.deleteNoteById(id);
+      } catch (err) {
+        return err;
+      }
+    }
   }
 module.exports = new Service();

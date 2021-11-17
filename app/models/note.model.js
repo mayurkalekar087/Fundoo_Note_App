@@ -8,7 +8,6 @@ class noteModel {
       const values = [info.user_id,info.title,info.description];
       console.log(values);
       pool.query(queries.createNote,values,(err, data) => {
-        //console.log("data from db :" + data);
         if (data) {
           console.log(data);
           callback(null, data.rows[0]);
@@ -53,6 +52,20 @@ class noteModel {
         });
       } catch (err) {
         return callback(err, null);
+      }
+    }
+    deleteNoteById =  (id) => {
+      try {
+        const values =[id.note_id,id.user_id];
+        pool.query(queries.deleteNote,values,(error,data)=>{
+          if(error)
+           return (error,null);
+           else{
+             return (null,data);
+           }
+        }) 
+      } catch (err){
+        return err;
       }
     }
   }

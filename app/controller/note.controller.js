@@ -61,7 +61,7 @@ class noteController {
     getNoteById = (req, res) => {
       try {
         const id = {
-          note_id: req.body.note_id,
+          note_id: req.params.note_id,
           user_id:req.body.user_id
         };
          noteService.getNoteById(id, (err, data) => {
@@ -88,7 +88,7 @@ class noteController {
     updateNoteById =(req, res) => {
       try {
         const updateNote = {
-          note_id: req.body.note_id,
+          note_id: req.params.note_id,
           user_id: req.body.user_id,
           title: req.body.title,
           description: req.body.description
@@ -114,6 +114,23 @@ class noteController {
         return res.status(500).json({
           message: "Internal server error",
           success: false
+        });
+      }
+    }
+    deleteNoteById =  (req, res) => {
+      try {
+        const id = { note_id: req.params.note_id, user_id: req.body.user_id};
+        const data =  noteService.deleteNoteById(id);
+        return res.status(200).json({
+          message: "Note Deleted succesfully",
+          success: true,
+          data: data
+        });
+      } catch (err) {
+        return res.status(500).json({
+          message: "Note not updated",
+          success: false,
+          data: err
         });
       }
     }
