@@ -8,4 +8,13 @@ CREATE TABLE users(
   password VARCHAR(255) NOT NULL
 );
 
-insert into users (firstName,lastName,email,password) values ('Monica',"Gellar","monica123@gmail.com"', "rachel@123");
+CREATE TABLE note(
+  note_id serial,
+	user_id serial,
+	title varchar(255) not null,	
+  description VARCHAR(255) not null,
+	primary key (note_id),
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+insert intlastName,email,password) values ('Monica',"Gellar","monica123@gmail.com"', "rachel@123");o users (firstName,
