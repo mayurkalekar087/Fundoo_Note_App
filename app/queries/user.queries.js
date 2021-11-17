@@ -6,6 +6,7 @@ const resetUser = "UPDATE expire_table1 SET random_string = $1 WHERE email = $2"
 const createNote = "INSERT INTO note (user_id,title,description) VALUES ($1,$2,$3) RETURNING *";
 const verifyString = "select random_string from expire_table1 where email=$1";
 const getNote =    "select * from note ";
+const getNoteById = "select * from note where user_id =$1 and note_id=$2";
 
 module.exports={
     createUser,
@@ -15,4 +16,5 @@ module.exports={
     createNote,
     verifyString,
     getNote,
+    getNoteById,
 };

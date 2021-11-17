@@ -27,5 +27,19 @@ class noteModel {
         }
       });
     }
+    getNoteById =  (id, callback) => {
+      try {
+        const values = [id.user_id,id.note_id];
+        pool.query(queries.getNoteById,values, (err, data) => {
+          if (err) {
+            return callback(err, null);
+          } else {
+            return callback(null, data);
+          }
+        });
+      } catch (err) {
+        return err;
+      }
+    }
   }
 module.exports = new noteModel();

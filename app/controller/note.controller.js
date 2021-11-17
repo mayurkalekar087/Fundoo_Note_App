@@ -58,5 +58,32 @@ class noteController {
         });
       }
     }
+    getNoteById = (req, res) => {
+      try {
+        const id = {
+          note_id: req.body.note_id,
+          user_id:req.body.user_id
+        };
+         noteService.getNoteById(id, (err, data) => {
+          if (err) {
+            return res.status(404).json({
+              message: "Note not found",
+              success: false
+            });
+          } else {
+            return res.status(200).json({
+              message: "Note retrived succesfully",
+              success: true,
+              data: data
+            });
+          }
+        });
+      } catch (err) {
+        return res.status(401).json({
+          error: err,
+          success: false
+        });
+      }
+    }
 }
 module.exports = new noteController();
