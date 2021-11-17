@@ -53,7 +53,7 @@ class UserDataController {
             message: 'Server-Error',
             data: null,
         });
-     }
+    }
 }
  /**
      * @description: Function created to verify user login info
@@ -153,8 +153,7 @@ forgotPassword = (req, res) => {
  resetPassword = (req, res) => {
   try {
     const resetInfo = {
-
-      token:req.body.token,
+      token:req.body.random_string,
       newPassword: req.body.password
     };
     UserService.resetPassword(resetInfo, (error, data) => {
@@ -178,7 +177,7 @@ forgotPassword = (req, res) => {
       data: null,
       message: "server-error"
     });
+    }
   }
-}
 }
 module.exports = new UserDataController();

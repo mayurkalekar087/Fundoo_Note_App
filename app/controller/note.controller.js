@@ -16,7 +16,7 @@ class noteController {
               message: "failed to post note",
               success: false
             });
-          } else {
+          }else{
             logger.info("Successfully inserted note");
             return res.status(201).send({
               message: "Successfully inserted note",
@@ -35,8 +35,7 @@ class noteController {
     }
     getNote = (req, res) => {
       try {
-        const id = { id: req.userData.id };
-        noteService.getNote((id), (err, data) => {
+        noteService.getNote((err, data) => {
           if (err) {
             logger.error("Failed to get all notes");
             return res.status(400).json({

@@ -1,36 +1,25 @@
 const { logger } = require("../../logger/logger");
 const pool = require("..//../config/database.config");
 const queries = require("..//queries/user.queries");
+require('dotenv').config();
 
-class Model {
+class noteModel {
     createNote = (info, callback) => {
       const values = [info.user_id,info.title,info.description];
       console.log(values);
-      pool.query(values,queries.createNote,(err, data) => {
-        if (err) {
-          console.log("error" + err);
-          logger.error("error"+err);
-          return callback(err.stack, null);
-        } else {
-          console.log(data.rows[0]);
-          return callback(null, data.rows[0]);
+      pool.query(queries.createNote,values,(err, data) => {
+        //console.log("data from db :" + data);
+        if (data) {
+          console.log(data);
+          callback(null, data.rows[0]);
+        }else {
+          logger.error("error"+ err);
+          callback(err.stack, null);
         }
       });
     }
-
-    
     getNote = (callback) => {
-      NoteRegister.find({}, (err, data) => {
-        if (err) {
-          return callback(err, null);
-        } else {
-          return callback(null, data);
-        }
-      });
-    }
-
-    getNote = (id, callback) => {
-      NoteRegister.find({ userId: id.id }, (err, data) => {
+      pool.query(queries.getNote,(err, data) => {
         if (err) {
           return callback(err, null);
         } else {
@@ -39,4 +28,4 @@ class Model {
       });
     }
   }
-module.exports = new Model();
+module.exports = new noteModel();

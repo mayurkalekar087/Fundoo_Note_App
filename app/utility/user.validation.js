@@ -15,25 +15,11 @@ const authUserforgot = Joi.object({
     email: Joi.string().email().required()
   });
 
-  validateReset = Joi.object({
+  const validateReset = Joi.object({
     random_string: Joi.string().required(),
     password: Joi.string().min(8)
       .pattern(new RegExp("[A-Za-z0-9]{4,}[$&+,:;=?@#|<>.^*()%!-]{2,}"))
       .required()
-  })
-
-  const resetSchema = Joi.object({
-    email: Joi.string().required(),
-    password: Joi.string()
-      .min(8)
-      .max(20)
-      .pattern(
-        // eslint-disable-next-line prefer-regex-literals
-        new RegExp(
-          "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#/$%/^&/*])(?=.{8,})"
-        )
-      )
-      .required()
   });
   
-module.exports = {authUserRegister,authUserLogin,authUserforgot,validateReset,resetSchema};
+module.exports = {authUserRegister,authUserLogin,authUserforgot,validateReset};
