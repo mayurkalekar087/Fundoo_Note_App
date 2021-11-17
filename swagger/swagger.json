@@ -160,6 +160,42 @@
                     }
                 }
             }
+        },
+        "/getnotes": {
+            "get": {
+                "tags": [
+                    "Get Notes"
+                ],
+                "description": "Get a  note !!",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "schema": {
+                    "$ref": "#/definitions/notes"
+                },
+                "responses": {
+                    "201": {
+                        "description": "Get note succesfully !!"
+                    },
+                    "401": {
+                        "description": "Please enter Valid Token"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     
@@ -207,7 +243,7 @@
         "resetpassword": {
             "type": "object",
             "properties": {
-                "token": {
+                "random_string": {
                     "type": "string"
                 },
                 "password": {
@@ -226,6 +262,7 @@
                 }
             },
             "example": {
+                "user_id":12,
                 "title": "Tittle",
                 "description": "description"
             }
