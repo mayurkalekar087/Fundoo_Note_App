@@ -22,4 +22,5 @@ const authUserforgot = Joi.object({
       .required()
   });
   
+
 module.exports = {authUserRegister,authUserLogin,authUserforgot,validateReset};

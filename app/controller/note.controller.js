@@ -3,9 +3,9 @@ const { logger } = require("../../logger/logger");
 
 class noteController {
     createNote =(req, res) => {
-      try {
+      try{
         const note = {
-          user_id:req.body.user_id,
+          user_id:req.userData.user_id,
           title: req.body.title,
           description: req.body.description
         };
@@ -62,7 +62,7 @@ class noteController {
       try {
         const id = {
           note_id: req.params.note_id,
-          user_id:req.body.user_id
+          user_id:req.userData.user_id
         };
          noteService.getNoteById(id, (err, data) => {
           if (err) {
@@ -89,7 +89,7 @@ class noteController {
       try {
         const updateNote = {
           note_id: req.params.note_id,
-          user_id: req.body.user_id,
+          user_id: req.userData.user_id,
           title: req.body.title,
           description: req.body.description
         };
@@ -119,7 +119,7 @@ class noteController {
     }
     deleteNoteById =  (req, res) => {
       try {
-        const id = { note_id: req.params.note_id, user_id: req.body.user_id};
+        const id = { note_id: req.params.note_id, user_id: req.userData.user_id};
         const data =  noteService.deleteNoteById(id);
         return res.status(200).json({
           message: "Note Deleted succesfully",

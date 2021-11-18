@@ -23,7 +23,7 @@ class Helper {
     */
   jwtTokenGenerate = (data) => {
       const dataForToken = {
-        id: data.id,
+        user_id: data.user_id,
         email:data.email
       };
     return jwt.sign(dataForToken, process.env.ACCESS_TOKEN_KEY , { expiresIn: "24H" });

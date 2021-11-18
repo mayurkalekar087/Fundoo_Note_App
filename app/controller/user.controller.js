@@ -1,5 +1,5 @@
 const UserService = require("..//service/user.service");
-const {authUserRegister,authUserLogin,authUserforgot,validateReset} = require("..//utility/user.validation");
+const {authUserRegister,authUserLogin,authUserforgot} = require("..//utility/user.validation");
 const {genSaltSync,hashSync} = require('bcrypt');
 const { logger } = require("../../logger/logger");
 
@@ -14,9 +14,9 @@ class UserDataController {
     try{
         const userData = {
             firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: req.body.password,
+            lastName:  req.body.lastName,
+            email:     req.body.email,
+            password:  req.body.password,
         };
         const salt = genSaltSync(10);
         userData.password = hashSync(req.body.password,salt);
