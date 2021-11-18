@@ -1,0 +1,20 @@
+{
+    "notes": {
+       "loginValidToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMDUsImVtYWlsIjoibWF5dXJrYWxla2FyMDg3QGdtYWlsLmNvbSIsImlhdCI6MTYzNzIzOTExNywiZXhwIjoxNjM3MzI1NTE3fQ.jjrN7OSMU5TarfQd1Riv-uWrk1mYQlMN-nlzz04YXgk",
+    "TokenExpiered":"JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMDUsImVtYWlsIjoibWF5dXJrYWxla2FyMDg3QGdtYWlsLmNvbSIsImlhdCI6MTYzNzIzOTExNywiZXhwIjoxNjM3MzI1NTE3fQ.jjrN7OSMU5TarfQd1Riv-uWrk1mYQlMN-nlzz04YXgk",
+    "EmptyToken":"",
+    "EmptyTitleAndDis":{
+                    "title":" ",
+                    "description":" "
+    },
+    "GetById":"1",
+    "InvalidId":"12f",
+    "EmptyId":"",
+    "UpdateById":"12",
+    "UpdateById_InvalidId":"21g",
+    "UpdateById_EmptyId":"",
+    "DeleteById":"12",
+    "DeleteById_InvalidId":"45d",
+    "DeleteById_EmptyId":""
+    }
+}

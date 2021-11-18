@@ -181,12 +181,12 @@ describe("User Registration ", () => {
   });  
   describe("resetpassword for positive and negative ", () => {
     it("GivenResetPasswordDetails_WhenProper_Password_Successfully_Reset", (done) => {
-      const resetPasswordDetails = user.reset.resetPassword;
-      const token = user.reset.tokenOne;
+      const resetPasswordDetails = user.user.resetPassword;
+      const random_string = user.user.tokenOne;
       chai
         .request(server)
         .post("/resetpassword")
-        .set({ authorization: token })
+        .set({ authorization: random_string })
         .send(resetPasswordDetails)
         .end((err, res) => {
           if (err) {
@@ -201,12 +201,12 @@ describe("User Registration ", () => {
         });
     });
     it("GivenResetPasswordDetails_When_Token_Has_Expiered_Or_Wrong", (done) => {
-      const resetPasswordDetails = user.reset.resetPassword;
-      const token = user.reset.tokenTwoInvaild;
+      const resetPasswordDetails = user.user.resetPassword;
+      const random_string = user.user.tokenTwoInvaild;
       chai
         .request(server)
         .post("/resetpassword")
-        .set({ authorization: token })
+        .set({ authorization: random_string })
         .send(resetPasswordDetails)
         .end((err, res) => {
           if (err) {
@@ -217,12 +217,12 @@ describe("User Registration ", () => {
         });
     });
     it("GivenResetPasswordDetails_When_Token_ArrayOfIndex_Wrong", (done) => {
-      const resetPasswordDetails = user.reset.resetPassword;
-      const token = user.reset.tokenInvaild;
+      const resetPasswordDetails = user.user.resetPassword;
+      const random_string = user.user.tokenInvaild;
       chai
         .request(server)
         .post("/resetpassword")
-        .set({ authorization: token })
+        .set({ authorization: random_string })
         .send(resetPasswordDetails)
         .end((err, res) => {
           if (err) {
@@ -232,7 +232,7 @@ describe("User Registration ", () => {
           done();
         });
     });
-  });
+   });
  
 
  
