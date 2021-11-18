@@ -5,7 +5,7 @@ require('dotenv').config();
 
 class noteModel {
     createNote = (info, callback) => {
-      const values = [info.title,info.description];
+      const values = [info.user_id,info.title,info.description];
       console.log(values);
       pool.query(queries.createNote,values,(err, data) => {
         if (data) {
