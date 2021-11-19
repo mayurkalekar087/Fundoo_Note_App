@@ -1,7 +1,14 @@
 const noteService = require("../service/note.service");
 const { logger } = require("../../logger/logger");
+const { validateNote} = require("..//utility/user.validation");
 
 class noteController {
+   /**
+     * @description function written to create notes into the database
+     * @param {*} a valid req body is expected
+     * @param {*} res
+     * @returns response
+     */
     createNote =(req, res) => {
       try{
         const note = {
@@ -9,6 +16,14 @@ class noteController {
           title: req.body.title,
           description: req.body.description
         };
+        const valid = validateNote.validate(req.body);
+        if (valid.error) {
+          logger.error("Invalid Note");
+          return res.status(400).send({
+            success: false,
+            message: "Please enter valid note"
+          });
+        }
         noteService.createNote(note, (error, data) => {
           if (error) {
             logger.error("failed to post note");
@@ -33,6 +48,13 @@ class noteController {
         });
       }
     }
+     /**
+     * @description function written to get all the notes from the database
+     * @param {*} req
+     * @param {*} res
+     * @returns response
+     */
+
     getNote = (req, res) => {
       try {
         noteService.getNote((err, data) => {
@@ -44,7 +66,7 @@ class noteController {
             });
           } else {
             logger.info("All notes retrived");
-            return res.status(201).json({
+            return res.status(200).json({
               message: "Notes retrived successfully",
               success: true,
               data: data
@@ -58,6 +80,11 @@ class noteController {
         });
       }
     }
+      /**
+      * @description function written to get label by ID
+      * @param {*} req
+      * @param {*} res
+      */
     getNoteById = (req, res) => {
       try {
         const id = {
@@ -66,7 +93,7 @@ class noteController {
         };
          noteService.getNoteById(id, (err, data) => {
           if (err) {
-            return res.status(404).json({
+            return res.status(401).json({
               message: "Note not found",
               success: false
             });
@@ -85,6 +112,12 @@ class noteController {
         });
       }
     }
+    /**
+     * @description function written to update notes using ID from the database
+     * @param {*} req
+     * @param {*} res
+     * @returns response
+     */
     updateNoteById =(req, res) => {
       try {
         const updateNote = {
@@ -93,6 +126,14 @@ class noteController {
           title: req.body.title,
           description: req.body.description
         };
+        const valid = validateNote.validate(req.body);
+        if (valid.error) {
+          logger.error("Invalid Note");
+          return res.status(400).send({
+            success: false,
+            message: "Please enter valid note"
+          });
+        }
         noteService.updateNoteById(updateNote, (error, data) => {
           if (error) {
             logger.error("Note not updated");
@@ -117,6 +158,12 @@ class noteController {
         });
       }
     }
+      /**
+   * @description : It is deleting an existing note in fundooNotes
+   * @param {httprequest} req
+   * @param {httpresponse} res
+   * @method: deleteNote from service.js
+  */
     deleteNoteById =  (req, res) => {
       try {
         const id = { note_id: req.params.note_id, user_id: req.userData.user_id};

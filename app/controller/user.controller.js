@@ -156,6 +156,7 @@ forgotPassword = (req, res) => {
       token:req.body.random_string,
       newPassword: req.body.password
     };
+    
     UserService.resetPassword(resetInfo, (error, data) => {
       if (data) {
           logger.info("Password reset successfully");

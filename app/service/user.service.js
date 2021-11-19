@@ -45,6 +45,11 @@ class UserService {
                 };
             });
           }
+           /**
+     * @description: Function gets data from model, whether it is valid or not.
+     * @param {*} user
+     * @param {*} callback
+     */
         forgotPassword = (user, callback) => {
             UserModel.forgotPassword(user, (err, data) => {
               if (err || !data) {
@@ -56,7 +61,11 @@ class UserService {
               }
             });
           }
-        
+         /**
+     * @description: Function gets data from model, whether it is valid or not.
+     * @param {*} resetInfo
+     * @param {*} callback
+     */
         resetPassword = (resetInfo, callback) => {
             UserModel.resetPassword(resetInfo, (error, data) => {
               if (data) {

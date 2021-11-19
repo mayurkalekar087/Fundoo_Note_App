@@ -19,7 +19,6 @@ class auth {
       }
     });
     logger.info("Jwt Token Generate");
-    //const token = Helper.jwtTokenGenerate(data);
     const mailOptions = {
       from: process.env.EMAIL,
       to: "mayurkalekar087@gmail.com",

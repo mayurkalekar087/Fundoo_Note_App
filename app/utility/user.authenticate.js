@@ -40,8 +40,6 @@ class Helper {
       const string = req.body.random_string;
       const values = [process.env.email];
       pool.query(queries.verifyString,values,(error,data)=>{
-      console.log(string);
-      console.log(JSON.stringify(data.rows[0].random_string));
       if (error) {
       logger.error("data does not found!");
       return res.status(401).send({success:false,message:"data is not there!"});
@@ -65,23 +63,25 @@ class Helper {
    * @param {*} next
    */
     verifyToken = (req, res, next) => {
+      const header = req.headers.authorization;
+      const myArr = header.split(" ");
+      const token = myArr[1];
       try {
-        const header = req.headers.authorization;
-        const myArr = header.split(" ");
-        const token = myArr[1];
-        const decode = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
-        if (decode) {
-          logger.info("token verified");
-          req.userData = decode;
-          next();
+        if (token) {
+          jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (error, decodedToken) => {
+            if (error) {
+              return res.status(400).send({ success: false, message: "Invalid Token"});
+            } else {
+              req.userData = decodedToken;
+              next();
+            }
+          });
         } else {
-          logger.info("token verify error");
+          return res.status(401).send({ success: false, message: "token has expired"});
         }
       } catch (error) {
-        res.status(401).send({
-          error: "Your token has expiered",
-        });
+        return res.status(500).send({ success: false, message: "Something went wrong!" });
       }
-  };
-} 
+    }
+ }
 module.exports = new Helper();

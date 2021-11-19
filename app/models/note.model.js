@@ -4,12 +4,15 @@ const queries = require("..//queries/user.queries");
 require('dotenv').config();
 
 class noteModel {
+   /**
+   * @description function written to create notes into database
+   * @param {*} a valid notesData is expected
+   * @returns saved data or if error returns error
+   */
     createNote = (info, callback) => {
       const values = [info.user_id,info.title,info.description];
-      console.log(values);
       pool.query(queries.createNote,values,(err, data) => {
         if (data) {
-          console.log(data);
           callback(null, data.rows[0]);
         }else {
           logger.error("error"+ err);

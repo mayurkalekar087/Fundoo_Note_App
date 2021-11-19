@@ -21,6 +21,13 @@ const authUserforgot = Joi.object({
       .pattern(new RegExp("[A-Za-z0-9]{4,}[$&+,:;=?@#|<>.^*()%!-]{2,}"))
       .required()
   });
-  
-
-module.exports = {authUserRegister,authUserLogin,authUserforgot,validateReset};
+  const validateNote = Joi.object({
+    title: Joi.string()
+      .required(),
+      description: Joi.string()
+      .required()
+  });
+  const getNoteValidation = Joi.object({
+    id: Joi.string().required()
+  });
+module.exports = {authUserRegister,authUserLogin,authUserforgot,validateReset,validateNote,getNoteValidation};
