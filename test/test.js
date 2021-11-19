@@ -178,61 +178,41 @@ describe("User Registration ", () => {
           return done();
         });
     });
-  });  
+  });
+
   describe("resetpassword for positive and negative ", () => {
-    it("GivenResetPasswordDetails_WhenProper_Password_Successfully_Reset", (done) => {
-      const resetPasswordDetails = user.user.resetPassword;
-      const random_string = user.user.tokenOne;
+    it("GivenResetPasswordDetails_when_strings_are_not_equal", (done) => {
+      const resetPasswordDetails = user.user.invalidResetPassword;
       chai
         .request(server)
         .post("/resetpassword")
-        .set({ authorization: random_string })
         .send(resetPasswordDetails)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
           res.should.have.status(200);
-          res.body.should.have.property("success").eql(true);
           res.body.should.have
             .property("message")
-            .eql("Password reset successfully");
+            .eql("strings are not equal!");
           done();
         });
     });
-    it("GivenResetPasswordDetails_When_Token_Has_Expiered_Or_Wrong", (done) => {
-      const resetPasswordDetails = user.user.resetPassword;
-      const random_string = user.user.tokenTwoInvaild;
+    it("GivenResetPasswordDetails_When_password_reset_successfully", (done) => {
+      const resetPasswordDetails = user.user.validResetPassword;
       chai
         .request(server)
         .post("/resetpassword")
-        .set({ authorization: random_string })
         .send(resetPasswordDetails)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
-          res.should.have.status(401);
+          res.should.have.status(200);
           done();
         });
     });
-    it("GivenResetPasswordDetails_When_Token_ArrayOfIndex_Wrong", (done) => {
-      const resetPasswordDetails = user.user.resetPassword;
-      const random_string = user.user.tokenInvaild;
-      chai
-        .request(server)
-        .post("/resetpassword")
-        .set({ authorization: random_string })
-        .send(resetPasswordDetails)
-        .end((err, res) => {
-          if (err) {
-            return done(err);
-          }
-          res.should.have.status(401);
-          done();
-        });
-    });
-   });
+});
  
 
  

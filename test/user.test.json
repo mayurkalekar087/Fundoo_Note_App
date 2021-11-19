@@ -52,11 +52,13 @@
         "userForgotPasswordisInvalid": {
         "email": "mayurkalekar@gmail"
         },
-        "resetPassword":{
-        "password": "Password@1234567890"
+        "validResetPassword":{
+                "random_string": "x5n4xq44sm",
+                "password": "Password@1234567890"
         },
-        "tokenOne":"hm8kwdmxqbq",
-        "tokenTwoInvaild": "hm8kwdmxqbq",
-        "tokenInvaild": "hm8kwdmxqbq"
+        "invalidResetPassword":{
+            "random_string": "c5n4xq44sm",
+            "password": "Password@1234567890"
+       }
     }
 }
