@@ -31,7 +31,7 @@ describe("create note api for positive and negative test case", () => {
         done();
       });
   });
-  it("GivenNotesDetails_When_Your_Token_Has_Expiered", (done) => {
+  it("GivenNotesDetails_When_Your_Token_Is_Invalid", (done) => {
     const token = noteInputs.notes.TokenInvalid;
     const createNotes = {
       title: faker.lorem.word(),
@@ -66,7 +66,7 @@ describe("get all note api for positive and negative test case", () => {
         done();
       });
   });
-  it("GivenGetAllNotesDetails_When_Token_Has_Expiered", (done) => {
+  it("GivenGetAllNotesDetails_When_Token_Is_Invalid", (done) => {
     const token = noteInputs.notes.TokenInvalid;
     chai
       .request(server)
@@ -114,7 +114,7 @@ describe("get note by id api for positive and negative test case", () => {
         done();
       });
   });
-  it("GivenGetNoteByIdDetails_When_Token_Has_Expiered", (done) => {
+  it("GivenGetNoteByIdDetails_When_Token_Is_Invalid", (done) => {
     const token = noteInputs.notes.TokenInvalid;
     const id = noteInputs.notes.GetById;
     chai
@@ -130,7 +130,7 @@ describe("get note by id api for positive and negative test case", () => {
         done();
       });
   });
-  it("GivenGetNoteByIdDetails_When_Token_Has_Empty", (done) => {
+  it("GivenGetNoteByIdDetails_When_Token_Is_Empty", (done) => {
     const token = noteInputs.notes.EmptyToken;
     const id = noteInputs.notes.GetById;
     chai
@@ -185,7 +185,7 @@ describe("update note by id api for positive and negative test case", () => {
         done();
       });
   });
-  it("GivenUpdateNoteByIdDetails_When_Token_Has_Expiered", (done) => {
+  it("GivenUpdateNoteByIdDetails_When_Token_Is_Invalid", (done) => {
     const token = noteInputs.notes.TokenInvalid;
     const id = noteInputs.notes.UpdateById;
     const updateNote = {
@@ -264,7 +264,7 @@ describe("delete note by id api for positive and negative test case", () => {
         done();
       });
   });
-  it("GivenGetNoteByIdDetails_When_Token_Has_Expiered", (done) => {
+  it("GivenGetNoteByIdDetails_When_Token_Is_Invalid", (done) => {
     const token = noteInputs.notes.TokenInvalid;
     const id = noteInputs.notes.DeleteById;
     chai

@@ -65,25 +65,8 @@ describe("User Registration ", () => {
             done();
         });
     });
-    it('givenWeakPassword_shouldReturnStatus400',(done)=>{
-        const userDetails = user.user.detailsWithWeakPassword;
-        chai
-        .request(server)
-        .post('/register')
-        .send(userDetails)
-        .end((err,res)=>{
-            if(err){
-                return done(err);
-            }
-            res.should.have.status(201);
-            res.body.should.have.property('success').eql(false);
-            done();
-        });
-    });
 });
-
-
-  describe("Login", () => {
+describe("Login", () => {
   it("givenLoginDetails_whenProper_UserLogin_successfully", (done) => {
       const loginDetails = user.user.login
       chai
@@ -166,6 +149,7 @@ describe("User Registration ", () => {
           return done();
         });
     });
+
     it("givenInValidEmail_shouldNotAbleToSendEmailToUserEmail", (done) => {
       const forgotPasswordDetails = user.user.userForgotPasswordisInvalid;
       chai.request(server)
@@ -181,8 +165,8 @@ describe("User Registration ", () => {
   });
 
   describe("resetpassword for positive and negative ", () => {
-    it("GivenResetPasswordDetails_when_strings_are_not_equal", (done) => {
-      const resetPasswordDetails = user.user.invalidResetPassword;
+    it("GivenResetPasswordDetails_WhenProper_Password_Successfully_Reset", (done) => {
+      const resetPasswordDetails = user.user.resetPasswordValid;
       chai
         .request(server)
         .post("/resetpassword")
@@ -192,14 +176,15 @@ describe("User Registration ", () => {
             return done(err);
           }
           res.should.have.status(200);
+          res.body.should.have.property("success").eql(true);
           res.body.should.have
             .property("message")
-            .eql("strings are not equal!");
+            .eql("Password reset successfully");
           done();
         });
     });
-    it("GivenResetPasswordDetails_When_password_reset_successfully", (done) => {
-      const resetPasswordDetails = user.user.validResetPassword;
+    it("GivenResetPasswordDetails_When_Token_Has_Expiered_Or_Wrong", (done) => {
+      const resetPasswordDetails = user.user.resetPasswordInvalid;
       chai
         .request(server)
         .post("/resetpassword")
@@ -208,11 +193,25 @@ describe("User Registration ", () => {
           if (err) {
             return done(err);
           }
-          res.should.have.status(200);
+          res.should.have.status(401);
           done();
         });
     });
-});
- 
+    it("GivenResetPasswordDetails_When_Token_Is_Wrong", (done) => {
+      const resetPasswordDetails = user.user.resetPasswordEmpty;
+      chai
+        .request(server)
+        .post("/resetpassword")
+        .send(resetPasswordDetails)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          res.should.have.status(401);
+          done();
+        });
+    });
+  });
+
 
  

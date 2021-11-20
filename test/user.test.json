@@ -52,13 +52,18 @@
         "userForgotPasswordisInvalid": {
         "email": "mayurkalekar@gmail"
         },
-        "validResetPassword":{
-                "random_string": "x5n4xq44sm",
-                "password": "Password@1234567890"
+        "resetPasswordValid":{
+            "random_string":"mixeyxycg6",
+            "password": "Mayur@0025"
         },
-        "invalidResetPassword":{
-            "random_string": "c5n4xq44sm",
-            "password": "Password@1234567890"
-       }
+        "resetPasswordInvalid":{
+            "random_string":"46elh8l",
+            "password": "Mayur@0025"
+        },
+        "resetPasswordEmpty":{
+            "random_string":"ht4",
+            "password": "Mayur@0025"
+        }
     }
 }
+        
