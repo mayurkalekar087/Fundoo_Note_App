@@ -31,15 +31,15 @@
             "password": "jas"
         },
         "login": {
-            "email": "jasprit123@gmail.com",
-            "password": "jasprit@123"
+            "email": "mayurkalekar087@gmail.com",
+            "password": "Mayur@0025"
         },
         "loginWrongPassword": {
-            "email": "jasprit123@gmail.com",
-            "password": "jasprit123"
+            "email": "mayurkalekar087@gmail.com",
+            "password": "Mayur@002"
         },
         "loginWithoutPassword": {
-            "email": "jasprit123@gmail.com",
+            "email": "mayurkalekar087@gmail.com",
             "password": ""
         },
         "loginWithWrongEmail": {
@@ -53,7 +53,7 @@
         "email": "mayurkalekar@gmail"
         },
         "resetPasswordValid":{
-            "random_string":"mixeyxycg6",
+            "random_string":"4hqwxmxauxp",
             "password": "Mayur@0025"
         },
         "resetPasswordInvalid":{

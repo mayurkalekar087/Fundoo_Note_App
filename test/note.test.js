@@ -4,9 +4,23 @@ const chaiHttp = require("chai-http");
 const server = require("../server");
 const faker = require("faker");
 const noteInputs = require("..//test/note.test.json");
-
+const userInput = require("..//test/user.test.json");
+let token  = '';
 chai.use(chaiHttp);
 chai.should();
+
+beforeEach((done) => {
+  chai.request(server)
+      .post('/login')
+      .send(userInput.user.login)
+      .end((error, res) => {
+          if (error) {
+            return done(error);
+          }
+          token = "bearer "+res.body.token;
+          done();
+      });
+});
 
 describe("create note api for positive and negative test case", () => {
   it("GivenNotesDetails_When_Note_Created_Successfully", (done) => {
